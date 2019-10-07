@@ -5,7 +5,7 @@
 
 Boid::Boid(aie::Renderer2D* renderer, vector_2 & spawn_position, Flock * flock) : m_renderer(renderer), m_parent_flock(flock)
 {
-	m_circle_radius = 10.0f;
+	m_circle_radius = 8.0f;
 
 	m_position = spawn_position;
 

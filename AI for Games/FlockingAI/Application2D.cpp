@@ -18,15 +18,15 @@ bool Application2D::startup() {
 
 	m_window_dimensions = { float(getWindowWidth()), float(getWindowHeight()) };
 
-	m_player = new Agent(200.0f, 200.0f);
-	m_player->AddBehaviour(new KeyboardBehaviour());
-	m_player->m_maxSpeed = 100.0f;
+	m_agent = new Agent(200.0f, 200.0f);
+	m_agent->AddBehaviour(new KeyboardBehaviour());
+	m_agent->m_maxSpeed = 250.0f;
 
 	m_flock = new Flock();
-	m_flock->m_agent = m_player;
+	m_flock->m_agent = m_agent;
 	//m_flock->m_input = ;
 
-	m_flock->create_boids(m_2dRenderer, 1000, m_window_dimensions);
+	m_flock->create_boids(m_2dRenderer, 100, m_window_dimensions);
 
 	m_timer = 0;
 
@@ -39,8 +39,8 @@ void Application2D::shutdown() {
 	m_font = nullptr;
 	delete m_2dRenderer;
 	m_2dRenderer = nullptr;
-	delete m_player;
-	m_player = nullptr;
+	delete m_agent;
+	m_agent = nullptr;
 }
 
 void Application2D::update(float deltaTime) {
@@ -51,7 +51,7 @@ void Application2D::update(float deltaTime) {
 	// input example
 	aie::Input* input = aie::Input::getInstance();
 
-	m_player->update(deltaTime);
+	m_agent->update(deltaTime);
 	m_flock->update(deltaTime, m_window_dimensions);
 
 // exit the application
@@ -70,7 +70,7 @@ void Application2D::draw() {
 	m_2dRenderer->begin();
 
 	m_2dRenderer->setRenderColour(0.0f, 0.3f, 1.0f);
-	m_player->draw(m_2dRenderer);
+	m_agent->draw(m_2dRenderer);
 
 	m_flock->draw();
 

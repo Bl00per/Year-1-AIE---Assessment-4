@@ -38,7 +38,7 @@ void Agent::update(float deltaTime)
 	}	
 	else if (m_velocity.x < -m_maxSpeed)
 	{
-		m_velocity.x < -m_maxSpeed;
+		m_velocity.x = -m_maxSpeed;
 	}
 	// Check if velocity is greater than the maxspeed for Y position
 	else if (m_velocity.y > m_maxSpeed)
@@ -47,7 +47,7 @@ void Agent::update(float deltaTime)
 	}	
 	else if (m_velocity.y < -m_maxSpeed)
 	{
-		m_velocity.y < -m_maxSpeed;
+		m_velocity.y = -m_maxSpeed;
 	}
 
 	// Boundry check X
