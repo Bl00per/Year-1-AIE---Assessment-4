@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer2D.h"
-#include "vector_2.h"
+#include "Vector2.h"
 #include <vector>
 
 class Behaviour;
@@ -27,8 +27,8 @@ protected:
 public:
 	float m_maxSpeed;
 
-	vector_2 m_acceleration;
-	vector_2 m_position;
-	vector_2 m_velocity;
+	Vector2 m_acceleration;
+	Vector2 m_position;
+	Vector2 m_velocity;
 };
 

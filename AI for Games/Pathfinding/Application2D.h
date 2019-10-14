@@ -5,7 +5,7 @@
 #include "graph.h"
 #include "node.h"
 #include "edge.h"
-#include "vector_2.h"
+#include "Vector2.h"
 #include <queue>
 
 class Application2D : public aie::Application {
@@ -29,9 +29,9 @@ protected:
 	int width = 15;
 	int height = 8;
 
-	graph<vector_2>* m_graph;
+	graph<Vector2>* m_graph;
 
-	std::queue<node<vector_2>*> m_selection_queue;
+	std::queue<node<Vector2>*> m_selection_queue;
 
 	float m_timer;
 };

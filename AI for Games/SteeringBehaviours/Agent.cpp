@@ -4,9 +4,9 @@
 
 Agent::Agent()
 {
-	m_texture = new aie::Texture("../bin/textures/playerArrow.png");
+	m_texture = new aie::Texture("./bin/textures/playerArrow.png");
 
-	m_transform[2] = vector_3(m_screen_center.x, m_screen_center.y, 1);
+	m_transform[2] = Vector3(m_screen_center.x, m_screen_center.y, 1);
 	m_current_state = SEEK;
 	m_target_position = m_screen_center * 0.5f; // Half way to 0.0f
 	m_maxSpeed = 50.0f;
@@ -69,25 +69,25 @@ void Agent::draw(aie::Renderer2D* renderer)
 
 void Agent::seek(float deltaTime)
 {
-	vector_2 target_direction = m_target_position - vector_2(m_transform[2].x, m_transform[2].y);
+	Vector2 target_direction = m_target_position - Vector2(m_transform[2].x, m_transform[2].y);
 	float distance = target_direction.magnitude();
 	target_direction.normalise();
 
 	// Rotate towards - Two dot prods required
-	float dot_forward = vector_2(m_transform[1].x, m_transform[1].y).dot(target_direction);
-	float dot_right = vector_2(m_transform[0].x, m_transform[0].y).dot(target_direction);
+	float dot_forward = Vector2(m_transform[1].x, m_transform[1].y).dot(target_direction);
+	float dot_right = Vector2(m_transform[0].x, m_transform[0].y).dot(target_direction);
 
 	if (dot_forward < 0.995f) // Ahead
 	{
 		if (dot_right > 0) // Turn right
 		{
-			matrix_3x3 rotateMatrix = matrix_3x3(1.0f);
+			Matrix3 rotateMatrix = Matrix3(1.0f);
 			rotateMatrix.setRotateZ(-m_turn_speed * deltaTime);
 			m_transform = m_transform * rotateMatrix;
 		}
 		else // turn left
 		{
-			matrix_3x3 rotateMatrix = matrix_3x3(1.0f);
+			Matrix3 rotateMatrix = Matrix3(1.0f);
 			rotateMatrix.setRotateZ(m_turn_speed * deltaTime);
 			m_transform = m_transform * rotateMatrix;
 		}
@@ -111,25 +111,25 @@ void Agent::seek(float deltaTime)
 
 void Agent::flee(float deltaTime)
 {
-	vector_2 target_direction = m_target_position - vector_2(m_transform[2].x, m_transform[2].y);
+	Vector2 target_direction = m_target_position - Vector2(m_transform[2].x, m_transform[2].y);
 	float distance = target_direction.magnitude();
 	target_direction.normalise();
 
 	// Rotate towards - Two dot prods required
-	float dot_forward = vector_2(m_transform[1].x, m_transform[1].y).dot(target_direction);
-	float dot_right = vector_2(m_transform[0].x, m_transform[0].y).dot(target_direction);
+	float dot_forward = Vector2(m_transform[1].x, m_transform[1].y).dot(target_direction);
+	float dot_right = Vector2(m_transform[0].x, m_transform[0].y).dot(target_direction);
 
 	if (dot_forward > -0.995f) // Negatory heading
 	{
 		if (dot_right > 0) // Turn right
 		{
-			matrix_3x3 rotate_matrix = matrix_3x3(1.0f);
+			Matrix3 rotate_matrix = Matrix3(1.0f);
 			rotate_matrix.setRotateZ(m_turn_speed * deltaTime); // Negatory speed
 			m_transform = m_transform * rotate_matrix;
 		}
 		else // turn left
 		{
-			matrix_3x3 rotate_matrix = matrix_3x3(1.0f);
+			Matrix3 rotate_matrix = Matrix3(1.0f);
 			rotate_matrix.setRotateZ(-m_turn_speed * deltaTime); // Negatory speed
 			m_transform = m_transform * rotate_matrix;
 		}
@@ -158,7 +158,7 @@ void Agent::wander(float deltaTime)
 		return;
 	}
 
-	matrix_3x3 vector_rotator = matrix_3x3(1);
+	Matrix3 vector_rotator = Matrix3(1);
 
 	int this_rand = rand();
 	this_rand %= 200; // 0 - 199
@@ -168,17 +168,17 @@ void Agent::wander(float deltaTime)
 	wander_rotation += rand_result;
 
 	vector_rotator.setRotateZ(wander_rotation);
-	vector_3 wander_vector = vector_rotator * vector_3(m_transform[1].x, m_transform[1].y, 0);
+	Vector3 wander_vector = vector_rotator * Vector3(m_transform[1].x, m_transform[1].y, 0);
 	wander_vector = wander_vector * wander_radius;
 
 	// Adjust the wander point
 	m_target_position =
 		// Objects position
-		vector_2(m_transform[2].x, m_transform[2].y) +
+		Vector2(m_transform[2].x, m_transform[2].y) +
 		// Objects forward * distance to wander circle origin
-		vector_2(m_transform[1].x, m_transform[1].y) * wander_projection +
+		Vector2(m_transform[1].x, m_transform[1].y) * wander_projection +
 		// Vector of length radius with wander rotation applied
-		vector_2(wander_vector.x, wander_vector.y);
+		Vector2(wander_vector.x, wander_vector.y);
 
 
 	// Seek to wander

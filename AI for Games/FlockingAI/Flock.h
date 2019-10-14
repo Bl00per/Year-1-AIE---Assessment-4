@@ -9,9 +9,9 @@ class Flock
 public:
 	Flock();
 
-	void create_boids(aie::Renderer2D* renderer, int amount, vector_2& window_dimensions);
+	void create_boids(aie::Renderer2D* renderer, int amount, Vector2& window_dimensions);
 
-	void update(float deltaTime, vector_2& window_dimensions);
+	void update(float deltaTime, Vector2& window_dimensions);
 	void draw();
 
 	std::vector<Boid*> m_boids;

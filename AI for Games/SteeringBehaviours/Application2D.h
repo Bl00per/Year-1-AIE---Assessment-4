@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "Agent.h"
 #include "KeyboardBehaviour.h"
-#include "vector_2.h"
+#include "Vector2.h"
 
 class Application2D : public aie::Application {
 public:
@@ -25,7 +25,7 @@ protected:
 
 	Agent* m_agent;
 
-	vector_2 m_window_dimensions;
+	Vector2 m_window_dimensions;
 
 
 	float m_timer;

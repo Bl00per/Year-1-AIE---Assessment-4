@@ -14,8 +14,8 @@ Application2D::~Application2D() {
 bool Application2D::startup() {
 
 	m_2dRenderer = new aie::Renderer2D();
-	m_font = new aie::Font("./font/consolas.ttf", 32);
-	m_graph = new graph<vector_2>();
+	m_font = new aie::Font("./bin/font/consolas.ttf", 32);
+	m_graph = new graph<Vector2>();
 
 	// Recursive magic to build graph
 	for (int i = 0; i < height; i++)
@@ -78,11 +78,11 @@ void Application2D::update(float deltaTime) {
 
 	// Terrible order N lookup
 	float shortest_distance = FLT_MAX;
-	node<vector_2>* closest_node = nullptr;
+	node<Vector2>* closest_node = nullptr;
 
 	if (input->wasMouseButtonPressed(0))
 	{
-		vector_2 mouse_position{ float(mouse_x), float(mouse_y) };
+		Vector2 mouse_position{ float(mouse_x), float(mouse_y) };
 		for (auto& a_node : m_graph->m_nodes)
 		{
 			float distance = (mouse_position - a_node->m_data).magnitude();
@@ -129,8 +129,8 @@ void Application2D::draw() {
 	//// Draw the graph
 	for (auto& a_edge : m_graph->m_edges)
 	{
-		node<vector_2>* A = a_edge->m_nodes[0];
-		node<vector_2>* B = a_edge->m_nodes[1];
+		node<Vector2>* A = a_edge->m_nodes[0];
+		node<Vector2>* B = a_edge->m_nodes[1];
 		m_2dRenderer->drawLine(A->m_data.x, A->m_data.y, B->m_data.x, B->m_data.y, 2.0f);
 	}
 
@@ -138,8 +138,8 @@ void Application2D::draw() {
 	m_2dRenderer->setRenderColour(1.0f, 0.0f, 0.0f, 1.0f);
 	for (int i = 0; i < int(m_graph->m_path.size()) - 1; i++)
 	{
-		node<vector_2>* A = m_graph->m_path[i];
-		node<vector_2>* B = m_graph->m_path[i + 1];
+		node<Vector2>* A = m_graph->m_path[i];
+		node<Vector2>* B = m_graph->m_path[i + 1];
 		m_2dRenderer->drawLine(A->m_data.x, A->m_data.y, B->m_data.x, B->m_data.y, 2.0f);
 
 	}

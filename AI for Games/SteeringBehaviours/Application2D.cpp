@@ -14,7 +14,7 @@ Application2D::~Application2D() {
 bool Application2D::startup() {
 
 	m_2dRenderer = new aie::Renderer2D();
-	m_font = new aie::Font("../bin/font/consolas.ttf", 32);
+	m_font = new aie::Font("./bin/font/consolas.ttf", 32);
 
 	m_window_dimensions = { float(getWindowWidth()), float(getWindowHeight()) };
 
@@ -68,8 +68,8 @@ void Application2D::draw() {
 		float start_x = m_agent->m_transform[2].x;
 		float start_y = m_agent->m_transform[2].y;
 
-		vector_2 end = { start_x, start_y };
-		end += vector_2(m_agent->m_transform[1].x, m_agent->m_transform[1].y) * m_agent->wander_projection;
+		Vector2 end = { start_x, start_y };
+		end += Vector2(m_agent->m_transform[1].x, m_agent->m_transform[1].y) * m_agent->wander_projection;
 
 		float end_x = end.x;
 		float end_y = end.y;

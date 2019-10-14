@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Renderer2D.h"
-#include "vector_2.h"
-#include "matrix_3x3.h"
+#include "Vector2.h"
+#include "Matrix3.h"
 #include <vector>
 #include <ctime>
 #include <cstdlib>
@@ -24,9 +24,9 @@ public:
 	// Add a behaviour to the agent
 	void AddBehaviour(Behaviour* behaviour);
 
-	matrix_3x3 m_transform = matrix_3x3(1.0f);
-	vector_2 m_target_position = vector_2(0.0f, 0.0f);
-	vector_2 m_screen_center = vector_2(1280, 720) * 0.5;
+	Matrix3 m_transform = Matrix3(1.0f);
+	Vector2 m_target_position = Vector2(0.0f, 0.0f);
+	Vector2 m_screen_center = Vector2(1280, 720) * 0.5;
 
 	enum STEERING_STATE
 	{
@@ -65,7 +65,7 @@ public:
 	float max_wander_time;
 	float current_wander_time;
 
-	vector_2 m_acceleration;
-	vector_2 m_velocity;
+	Vector2 m_acceleration;
+	Vector2 m_velocity;
 };
 

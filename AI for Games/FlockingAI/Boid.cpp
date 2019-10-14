@@ -3,20 +3,20 @@
 #include "Renderer2D.h"
 #include "Agent.h"
 
-Boid::Boid(aie::Renderer2D* renderer, vector_2 & spawn_position, Flock * flock) : m_renderer(renderer), m_parent_flock(flock)
+Boid::Boid(aie::Renderer2D* renderer, Vector2 & spawn_position, Flock * flock) : m_renderer(renderer), m_parent_flock(flock)
 {
 	m_circle_radius = 8.0f;
 
 	m_position = spawn_position;
 
-	m_velocity = vector_2(0.0f, 30.0f);
+	m_velocity = Vector2(0.0f, 30.0f);
 
 	// If velocity is invalid
 	float temp_mag = this->m_velocity.magnitude();
 	if (temp_mag <= 0.00001f)
 	{
 		// Go east
-		this->m_velocity = vector_2(m_parent_flock->BOID_SPEED, 0.0f);
+		this->m_velocity = Vector2(m_parent_flock->BOID_SPEED, 0.0f);
 	}
 	else
 	{
@@ -26,7 +26,7 @@ Boid::Boid(aie::Renderer2D* renderer, vector_2 & spawn_position, Flock * flock) 
 	}
 }
 
-void Boid::update(float deltaTime, vector_2 & window_dimensions)
+void Boid::update(float deltaTime, Vector2 & window_dimensions)
 {
 	std::vector<Boid*> neighbours;
 	for (Boid* boid : m_parent_flock->m_boids)
@@ -45,8 +45,8 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 
 	// ~~~Stay in the circle~~~
 	// The further it is outside of the circle, the faster it moves towards the circle
-	vector_2 world_centre(window_dimensions / 2);
-	vector_2 to_centre = world_centre - this->m_position;
+	Vector2 world_centre(window_dimensions / 2);
+	Vector2 to_centre = world_centre - this->m_position;
 	float to_centre_mag = to_centre.magnitude();
 	float distance_outside_circle = to_centre_mag - window_dimensions.y / 2;
 	if (distance_outside_circle > 0.0f)
@@ -58,10 +58,10 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 
 	// ~~~Speration~~~
 	// The closer you are to another boid, the faster it moves away
-	vector_2 seperation_force;
+	Vector2 seperation_force;
 	for (Boid* neighbour : neighbours)
 	{
-		vector_2 from_neighbour_to_us = this->m_position - neighbour->m_position;
+		Vector2 from_neighbour_to_us = this->m_position - neighbour->m_position;
 		from_neighbour_to_us /= from_neighbour_to_us.magnitude();
 		from_neighbour_to_us *= m_parent_flock->SEPERATION_FORCE_MAG;
 		seperation_force += from_neighbour_to_us;
@@ -71,14 +71,14 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 	// ~~~Cohesion~~~ (the action or fact of forming a united whole. [forming a group])
 	if (neighbours.size() > 0)
 	{
-		vector_2 average_neighbour_position;
+		Vector2 average_neighbour_position;
 		for (Boid* neighbour : neighbours)
 		{
 			average_neighbour_position += neighbour->m_position;
 		}
 		average_neighbour_position /= neighbours.size();
 
-		vector_2 from_us_to_average = average_neighbour_position - this->m_position;
+		Vector2 from_us_to_average = average_neighbour_position - this->m_position;
 
 		from_us_to_average /= from_us_to_average.magnitude();
 		from_us_to_average *= m_parent_flock->COHESION_FORCE_MAG;
@@ -89,7 +89,7 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 	// Make sure all neighbours are pointing in same direction
 	if (neighbours.size() > 0)
 	{
-		vector_2 average_neighbour_velocity;
+		Vector2 average_neighbour_velocity;
 		for (Boid* neighbour : neighbours)
 		{
 			average_neighbour_velocity += neighbour->m_velocity;
@@ -105,7 +105,7 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 	if (temp_mag <= 0.00001f)
 	{
 		// Go east
-		this->m_velocity = vector_2(m_parent_flock->BOID_SPEED, 0.0f);
+		this->m_velocity = Vector2(m_parent_flock->BOID_SPEED, 0.0f);
 	}
 	else
 	{
@@ -116,11 +116,11 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 	this->m_position += this->m_velocity * deltaTime;
 
 
-	vector_2 player_pos(m_parent_flock->m_agent->m_position.x, m_parent_flock->m_agent->m_position.y);
+	Vector2 player_pos(m_parent_flock->m_agent->m_position.x, m_parent_flock->m_agent->m_position.y);
 
 	if (m_parent_flock->m_input->isKeyDown(aie::INPUT_KEY_SPACE))
 	{ 
-		vector_2 boid_to_player = player_pos - this->m_position;
+		Vector2 boid_to_player = player_pos - this->m_position;
 
 		float force_maginitude = boid_to_player.magnitude();
 
@@ -134,7 +134,7 @@ void Boid::update(float deltaTime, vector_2 & window_dimensions)
 	}
 	else
 	{
-		vector_2 boid_to_player = player_pos - this->m_position;
+		Vector2 boid_to_player = player_pos - this->m_position;
 
 		float force_maginitude = boid_to_player.magnitude();
 
@@ -154,7 +154,7 @@ void Boid::draw()
 	m_renderer->drawCircle(m_position.x, m_position.y, m_circle_radius);
 }
 
-void Boid::add_force(vector_2 & force)
+void Boid::add_force(Vector2 & force)
 {
 	this->m_velocity += force;
 }

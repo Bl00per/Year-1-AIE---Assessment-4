@@ -5,7 +5,7 @@
 
 
 #include "node.h"
-#include "vector_2.h"
+#include "Vector2.h"
 
 //template <typename T>
 class heap
@@ -13,7 +13,7 @@ class heap
 public:
 	heap() : m_item_count(0), m_capacity(default_heap_size)
 	{
-		m_data = new node<vector_2>*[m_capacity];
+		m_data = new node<Vector2>*[m_capacity];
 
 	}
 
@@ -26,7 +26,7 @@ public:
 	static const size_t default_heap_size = 1024;
 
 	// Return copy of lowest element without removal
-	node<vector_2>* peek() { return m_data[0]; }
+	node<Vector2>* peek() { return m_data[0]; }
 
 	// Copy of current member count
 	size_t size() { return m_item_count; }
@@ -35,10 +35,10 @@ public:
 	void clear()
 	{
 		delete[] m_data;
-		m_data = new node<vector_2>*[m_capacity];
+		m_data = new node<Vector2>*[m_capacity];
 	}
 
-	int find(const node<vector_2>* a_item)
+	int find(const node<Vector2>* a_item)
 	{
 		for (int i = 0; i < m_item_count; i++)
 		{
@@ -52,7 +52,7 @@ public:
 
 
 	//private:
-	void add(node<vector_2>* a_item)
+	void add(node<Vector2>* a_item)
 	{
 		// Add at first available index
 		m_data[m_item_count] = a_item;
@@ -65,7 +65,7 @@ public:
 		while ((where_we_are > 0) && m_data[where_we_are]->m_f_score < m_data[our_parent]->m_f_score)
 		{
 			// Swap and repeat
-			node<vector_2>* swap_buffer = m_data[where_we_are];
+			node<Vector2>* swap_buffer = m_data[where_we_are];
 			m_data[where_we_are] = m_data[our_parent];
 			m_data[our_parent] = swap_buffer;
 			// Iterate
@@ -74,9 +74,9 @@ public:
 		}
 	}
 
-	node<vector_2>* pop()
+	node<Vector2>* pop()
 	{
-		node<vector_2>* out_data = m_data[0];
+		node<Vector2>* out_data = m_data[0];
 
 		// Last becomes first
 		m_data[0] = m_data[m_item_count - 1];
@@ -113,7 +113,7 @@ public:
 			// Swap if smaller than where we are
 			if (m_data[where_we_are]->m_f_score > m_data[smaller_child_index]->m_f_score)
 			{
-				node<vector_2>* swap_buffer = m_data[where_we_are];
+				node<Vector2>* swap_buffer = m_data[where_we_are];
 				m_data[where_we_are] = m_data[smaller_child_index];
 				m_data[smaller_child_index] = swap_buffer;
 				where_we_are = smaller_child_index; // Continue trading down
@@ -128,7 +128,7 @@ public:
 		return out_data;
 	}
 
-	node<vector_2>** m_data = nullptr;
+	node<Vector2>** m_data = nullptr;
 	size_t m_capacity = 0;
 	size_t m_item_count = 0;
 
